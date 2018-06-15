@@ -4,21 +4,32 @@ import cors from "cors";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import httpErrors from "http-errors";
+import session from "express-session";
+import connectRedis from "connect-redis";
 
 import indexRouter from "./router/index";
+import secrets from "./secretLoader";
 
 const app = express();
-app.set("port", process.env.PORT || 3000);
+const RedisStore = connectRedis(session);
 app.set("views", path.join(__dirname, "..", "views"));
 app.set("view engine", "pug");
 
 app.use(cors({
-    origin: "*"
+    origin: secrets.approvedOrigins
 }));
-app.use(logger("dev"));
+app.use(logger(secrets.logLevel));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(secrets.cookieSecret, {}));
+app.use(session({
+    store: new RedisStore({
+        url: secrets.redisConn
+    }),
+    resave: false,
+    saveUninitialized: false,
+    secret: secrets.sessionSecret
+}));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/", indexRouter);
