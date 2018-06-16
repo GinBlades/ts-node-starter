@@ -7,7 +7,8 @@ import httpErrors from "http-errors";
 import session from "express-session";
 import connectRedis from "connect-redis";
 
-import indexRouter from "./router/index";
+import indexRouter from "./routes/index";
+import tmpDemoRouter from "./routes/tmpDemo";
 import secrets from "./secretLoader";
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/", indexRouter);
+app.use("/tmp-demo", tmpDemoRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     next(httpErrors(404));

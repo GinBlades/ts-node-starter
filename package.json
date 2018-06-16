@@ -5,12 +5,16 @@
     "main": "index.js",
     "scripts": {
         "build": "tsc",
-        "start": "node ./dist/server.js"
+        "start": "node ./dist/server.js",
+        "watch-node": "nodemon ./dist/server.js",
+        "watch-ts": "tsc -w",
+        "watch": "concurrently -k -p \"[{name}]\" -n \"Node,TypeScript\" -c \"yellow.bold,cyan.bold\" \"npm run watch-node\" \"npm run watch-ts\""
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "concurrently": "^3.5.1",
         "connect-redis": "^3.3.3",
         "cookie-parser": "^1.4.3",
         "cors": "^2.8.4",

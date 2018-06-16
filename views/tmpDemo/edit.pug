@@ -1,0 +1,14 @@
+h1 Edit TmpDemo
+
+form(action=`/tmp-demo/${tmpDemo._id}`, method="post")
+  .form-group
+    label(for="firstName") First Name
+    input(type="text", name="firstName", id="firstName", value=tmpDemo.firstName)
+  .form-group
+    label(for="lastName") Last Name
+    input(type="text", name="lastName", id="lastName", value=tmpDemo.lastName)
+  .form-group
+    label(for="position") Position
+    input(type="number", name="position", id="position", value=tmpDemo.position)
+  .form-group
+    input(type="submit" value="Save")
