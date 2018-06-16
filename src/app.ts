@@ -9,6 +9,7 @@ import connectRedis from "connect-redis";
 
 import indexRouter from "./routes/index";
 import tmpDemoRouter from "./routes/tmpDemo";
+import tmpDemoApiRouter from "./routes/api/tmpDemo";
 import secrets from "./secretLoader";
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/", indexRouter);
 app.use("/tmp-demo", tmpDemoRouter);
+app.use("/api/tmp-demo", tmpDemoApiRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     next(httpErrors(404));

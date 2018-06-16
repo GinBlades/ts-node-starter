@@ -17,6 +17,12 @@ export default class TmpDemo {
         return `${this.firstName} ${this.lastName}`;
     }
 
+    public static fromObj(obj: any) {
+        const demo = TmpDemo.init(obj.firstName, obj.lastName, obj.position);
+        demo._id = obj._id;
+        return demo;
+    }
+
     public static init(firstName: string, lastName: string, position: number) {
         let demo = new TmpDemo();
         demo.firstName = firstName;
